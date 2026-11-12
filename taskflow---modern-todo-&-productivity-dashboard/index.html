@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow - Modern Todo & Productivity Dashboard</title>
+    <meta name="description" content="A clean, modern productivity todo list web application with dashboard statistics, filters, and local storage persistence." />
+    <meta property="og:title" content="TaskFlow - Modern Todo & Productivity Dashboard" />
+    <meta property="og:description" content="A clean, modern productivity todo list web application with dashboard statistics, filters, and local storage persistence." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Application Stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      
+      <!-- 1. Header Section -->
+      <header class="app-header">
+        <div class="header-top">
+          <div class="brand-wrapper">
+            <div class="brand-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h1 class="brand-title">Task<span>Flow</span></h1>
+            </div>
+          </div>
+          <div class="header-date-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="current-date">Today</span>
+          </div>
+        </div>
+        <p class="header-message">
+          Stay organized, track your progress, and accomplish your daily goals with clarity and focus.
+        </p>
+      </header>
+
+      <!-- 2. Dashboard Statistics Section -->
+      <section class="stats-grid" aria-label="Task Statistics">
+        <!-- Total Tasks -->
+        <article class="stat-card total">
+          <div class="stat-header">
+            <span class="stat-title">Total Tasks</span>
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value tabular-nums" id="stat-total">0</div>
+            <span class="stat-subtitle">All tracked tasks</span>
+          </div>
+        </article>
+
+        <!-- Pending Tasks -->
+        <article class="stat-card pending">
+          <div class="stat-header">
+            <span class="stat-title">Pending Tasks</span>
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value tabular-nums" id="stat-pending">0</div>
+            <span class="stat-subtitle">Remaining to complete</span>
+          </div>
+        </article>
+
+        <!-- Completed Tasks -->
+        <article class="stat-card completed">
+          <div class="stat-header">
+            <span class="stat-title">Completed Tasks</span>
+            <div class="stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value tabular-nums" id="stat-completed">0</div>
+            <span class="stat-subtitle">Successfully finished</span>
+          </div>
+        </article>
+
+        <!-- Productivity Progress Meter -->
+        <div class="productivity-bar-container">
+          <div class="productivity-header">
+            <span class="productivity-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Daily Completion Rate
+            </span>
+            <span class="productivity-percent tabular-nums" id="progress-percent">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Task completion progress">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Task Input Section -->
+      <section class="task-input-card">
+        <form class="task-form" id="task-form" autocomplete="off">
+          <div class="input-row">
+            <div class="task-input-wrapper">
+              <span class="task-input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </span>
+              <input
+                type="text"
+                class="task-input"
+                id="task-input"
+                placeholder="What do you need to accomplish today?"
+                maxlength="150"
+                aria-label="New task input"
+              />
+            </div>
+            <button type="submit" class="btn-add" id="btn-add">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Task
+            </button>
+          </div>
+          <div class="error-message" id="error-message" role="alert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            Please enter a task before adding.
+          </div>
+        </form>
+      </section>
+
+      <!-- 4. Task Controls & Filters -->
+      <section class="controls-bar" aria-label="Task Filters">
+        <div class="filter-group" role="tablist">
+          <button type="button" class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
+            All <span class="filter-count tabular-nums" id="count-all">0</span>
+          </button>
+          <button type="button" class="filter-btn" data-filter="active" role="tab" aria-selected="false">
+            Active <span class="filter-count tabular-nums" id="count-active">0</span>
+          </button>
+          <button type="button" class="filter-btn" data-filter="completed" role="tab" aria-selected="false">
+            Completed <span class="filter-count tabular-nums" id="count-completed">0</span>
+          </button>
+        </div>
+
+        <div class="actions-group">
+          <button type="button" class="btn-secondary" id="btn-clear-completed" title="Remove all completed tasks">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Clear Completed
+          </button>
+        </div>
+      </section>
+
+      <!-- 5. Task List Section -->
+      <section class="task-list-section" aria-label="Tasks">
+        <ul class="task-list" id="task-list">
+          <!-- Populated dynamically by script.js -->
+        </ul>
+
+        <!-- 6. Empty State Message -->
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-icon-box" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <path d="m9 14 2 2 4-4"></path>
+            </svg>
+          </div>
+          <h2 class="empty-title" id="empty-title">No tasks yet</h2>
+          <p class="empty-description" id="empty-desc">
+            Stay organized and ahead of your goals by typing a task above and clicking Add Task.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <span>TaskFlow &bull; Clean Productivity Workspace</span>
+      </footer>
+
+    </div>
+
+    <!-- Application JavaScript -->
+    <script type="module" src="/script.js"></script>
+  </body>
+</html>

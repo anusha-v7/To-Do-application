@@ -1,0 +1,6 @@
+{
+  "name": "TaskFlow - Modern Todo & Productivity Dashboard",
+  "description": "A clean, modern productivity todo list web application with dashboard statistics, filters, and local storage persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
